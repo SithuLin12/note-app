@@ -1,0 +1,43 @@
+body {
+    background-color: #1D2D3F;
+}
+
+#header {
+    height: 50vh;
+    background: linear-gradient(#1D2D3F, rgba(255, 255, 255, 0.041));
+    border-bottom-left-radius: 10%;
+    border-bottom-right-radius: 10%;
+}
+
+#header .nav-link {
+    color: white !important;
+}
+
+#header img {
+    width: 60% !important;
+
+}
+
+.navbar .dropdown-menu {
+    min-width: 48px !important;
+}
+
+.navbar .dropdown-menu span:hover {
+    color: #25837b25 !important;
+}
+
+.bg-bg {
+    background-color: #222258;
+}
+
+.card {
+    background-color: #32325d;
+}
+
+.list-group-item {
+    border: 0px !important;
+}
+
+.label .list-group-item {
+    font-size: 13px;
+}
