@@ -22,6 +22,13 @@ export default function Register() {
   const authUserContext = useContext(AuthContext)
   const Msgtext = useContext(MessageContext)
 
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      Msgtext.setMessage({type:"error",message: "Your Already register"})
+      history.push('/')
+    }
+  },[])
+
 
   const register = () => {
     setLoader(true)

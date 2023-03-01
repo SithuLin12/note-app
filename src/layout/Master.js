@@ -1,7 +1,17 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
 
 export default function Master(props) {
+
+  const authUser = useContext(AuthContext)
+  const history = useHistory();
+  const logout =() => {
+    localStorage.removeItem('token');
+    authUser.setAuth({})
+    history.push('/login')
+  }
+
   return (
     <>
     <div>
@@ -54,8 +64,14 @@ export default function Master(props) {
                   recusandae quasi tempore placeat aliquam autem, a soluta nisi totam
                   temporibus dolorem!
                 </p>
-                <Link to="/register" className="btn btn-outline-primary">SignUp</Link>
+                {
+                  localStorage.getItem('token') ? 
+                  <button onClick={()=>logout()} className='btn btn-danger'>Logout</button> :
+                  <>
+                  <Link to="/register" className="btn btn-outline-primary">SignUp</Link>
                 <Link to='/login' className="btn btn-primary">Login</Link>
+                  </>
+                }
               </div>
               <div className="col-md-6 text-center">
                 <img className src="https://wp.xpeedstudio.com/seocify/home-fifteen/wp-content/uploads/sites/27/2020/03/home17-banner-image-min.png" alt="" />

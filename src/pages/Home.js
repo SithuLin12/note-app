@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import Spinner from '../Components/Spinner'
+import LableContext from '../context/LableContext'
+import MessageContext from '../context/MessageContext'
 import Master from '../layout/Master'
 
-export default function home() {
+
+ function Home() {
+
+  
+  const Message = useContext(MessageContext)
+  const history = useHistory();
+
+  useEffect(()=>{
+    if(!localStorage.getItem('token')){
+      Message.setMessage({type:"error",message: "Please login First!"})
+      history.push('/login')
+    }
+  },[])
+
+  const {lable,loader,selectLable,setSelectLable} = useContext(LableContext)
+
+
+  console.log(lable);
   return (
     <Master>
         <div className="container mt-3">
@@ -9,39 +30,36 @@ export default function home() {
             {/* For Category and Information */}
             <div className="col-md-4">
               <div className="card bg-gray-100 mb-3">
-                <div className="card-body">
-                  <li className="list-group-item bg-bg text-white">
+                {
+                  loader ?
+                  <Spinner/> :
+                  <>
+                  <li  className="list-group-item bg-bg text-white">
                     Label
                   </li>
                   <ul className="list-group label">
-                    <li className="list-group-item bg-dark text-white">
+                    {
+                      lable.map((d) => {
+                        return (
+                          <li style={{cursor:"pointer"}} className={`list-group-item ${selectLable == d.id ? 'bg-danger' : 'bg-dark'} text-white`} key={d.id} onClick={()=>setSelectLable(d.id)}>
                       <span className="fas fa-tags text-white text-small" />
                       &nbsp; &nbsp;
-                      Laravel Note
-                      <span className="badge badge-primary  float-right">3</span>
+                      {d.name}
+                      <span className="badge badge-white text-dark  float-right">{d.note_count}</span>
                     </li>
-                    <li className="list-group-item bg-dark text-white">
-                      <span className="fas fa-tags text-white text-small" />
-                      &nbsp; &nbsp;
-                      Vue JS Note
-                      <span className="badge badge-primary  float-right">3</span>
-                    </li>
-                    <li className="list-group-item bg-dark text-white">
-                      <span className="fas fa-tags text-white text-small" />
-                      &nbsp; &nbsp;
-                      Vue JS Note
-                      <span className="badge badge-primary  float-right">3</span>
-                    </li>
-                    <li className="list-group-item bg-dark text-white">
-                      <span className="fas fa-tags text-white text-small" />
-                      &nbsp; &nbsp;
-                      Vue JS Note
-                      <span className="badge badge-primary  float-right">3</span>
-                    </li>
+                        )
+                      })
+                    }
+                    
                     <li className="list-group-item bg-dark text-white">
                       <a href className="float-right text-decoration-none text-white">View All</a>
                     </li>
                   </ul>
+                  </>
+                }
+                <div className="card-body">
+                
+                  
                 </div>
               </div>
               <div className="card bg-gray-100 mb-3">
@@ -301,3 +319,5 @@ export default function home() {
     </Master>
   )
 }
+
+export default Home
